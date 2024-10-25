@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+</head>
+<body>
+    <h1>Testing Microsoft Translator API</h1>
+    <p>Check the browser console for API responses.</p>
+
+    <script>
+        const apiKey = 'b6869bd7db8e4c11b7ab676cfe46771c';  // Replace with your Microsoft Translator API Key
+        const region = 'centralindia';   // Replace with your Azure API region (e.g., 'eastus')
+        const endpoint = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=hi';
+        
+        const textToTranslate = "Hello, how are you?";
+
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Ocp-Apim-Subscription-Key': apiKey,
+                'Ocp-Apim-Subscription-Region': region,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify([{ Text: textToTranslate }])
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("API request failed with status: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Translated text:", data[0].translations[0].text);
+        })
+        .catch(error => {
+            console.error("Error during translation:", error);
+        });
+    </script>
+</body>
+</html>
